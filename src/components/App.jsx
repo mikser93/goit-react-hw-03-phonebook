@@ -12,11 +12,11 @@ class App extends Component {
   };
 
   componentDidMount() {
-    const currentLS =  localStorage.getItem('contactsList')
+    const currentLS = localStorage.getItem('contactsList');
     if (currentLS) {
-      this.setState({contacts: JSON.parse(currentLS)});
+      this.setState({ contacts: JSON.parse(currentLS) });
     }
-  };
+  }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.contacts !== this.state.contacts) {
@@ -27,8 +27,7 @@ class App extends Component {
   addContact = (name, number) => {
     if (
       this.state.contacts
-        .reduce((acc, item) => [...acc, item.name], [])
-        .includes(name)
+        .find(item => item.name === name)
     ) {
       alert(`${name} is already in contacts`);
     } else {
@@ -40,9 +39,9 @@ class App extends Component {
     }
   };
 
-  deleteContact = event => {
+  deleteContact = id => {
     const currentContacts = [...this.state.contacts].filter(
-      item => item.id !== event.target.name
+      item => item.id !== id
     );
     this.setState({ contacts: currentContacts });
   };
